@@ -3,15 +3,14 @@ const Applicant = require('../models/M_Applicant')
 const router = new express.Router()
 const formidable = require('formidable')
 
-router.post('/applicant', async (req, res) => {
+router.post('/applicant', (req, res) => {
 
     const form = new formidable.IncomingForm();
-
     form.parse(req, async (error, fields, files) => 
     {
-      res.json({error,fields,files});
+      let result = await Applicant.save(fields);
+      res.json(result);
     });
-
 
 })
 
@@ -39,12 +38,6 @@ uploadImage = async (files, doc) => {
       return result;
     }
   };
-
-
-
-
-
-
 
 
 module.exports = router
